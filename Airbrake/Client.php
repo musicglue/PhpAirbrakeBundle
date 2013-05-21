@@ -1,5 +1,5 @@
 <?php
-namespace Nodrew\Bundle\PhpAirbrakeBundle\Airbrake;
+namespace MusicGlue\Bundle\PhpAirbrakeBundle\Airbrake;
 
 use Airbrake\Client as AirbrakeClient;
 use Airbrake\Notice;
@@ -13,7 +13,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * This class assists in the loading of the php-airbrake Client class.
  *
  * @package		Airbrake
- * @author		Drew Butler <hi@nodrew.com>
+ * @author		Drew Butler <hi@MusicGlue.com>
  * @copyright	(c) 2011 Drew Butler
  * @license		http://www.opensource.org/licenses/mit-license.php
  */

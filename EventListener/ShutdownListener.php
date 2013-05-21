@@ -1,7 +1,7 @@
 <?php
-namespace Nodrew\Bundle\PhpAirbrakeBundle\EventListener;
+namespace MusicGlue\Bundle\PhpAirbrakeBundle\EventListener;
 
-use Nodrew\Bundle\PhpAirbrakeBundle\Airbrake\Client,
+use MusicGlue\Bundle\PhpAirbrakeBundle\Airbrake\Client,
     Symfony\Component\HttpKernel\Event\FilterControllerEvent;
 
 /**
@@ -10,7 +10,7 @@ use Nodrew\Bundle\PhpAirbrakeBundle\Airbrake\Client,
  * Handles shutdown errors and make sure they get logged.
  *
  * @package		Airbrake
- * @author		Drew Butler <hi@nodrew.com>
+ * @author		Drew Butler <hi@MusicGlue.com>
  * @copyright	(c) 2012 Drew Butler
  * @license		http://www.opensource.org/licenses/mit-license.php
  */

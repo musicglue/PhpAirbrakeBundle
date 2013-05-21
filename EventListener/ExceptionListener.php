@@ -1,7 +1,7 @@
 <?php
-namespace Nodrew\Bundle\PhpAirbrakeBundle\EventListener;
+namespace MusicGlue\Bundle\PhpAirbrakeBundle\EventListener;
 
-use Nodrew\Bundle\PhpAirbrakeBundle\Airbrake\Client,
+use MusicGlue\Bundle\PhpAirbrakeBundle\Airbrake\Client,
     Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent,
     Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -11,7 +11,7 @@ use Nodrew\Bundle\PhpAirbrakeBundle\Airbrake\Client,
  * Handles exceptions that occur in the code base.
  *
  * @package		Airbrake
- * @author		Drew Butler <hi@nodrew.com>
+ * @author		Drew Butler <hi@MusicGlue.com>
  * @copyright	(c) 2011 Drew Butler
  * @license		http://www.opensource.org/licenses/mit-license.php
  */

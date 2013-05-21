@@ -1,7 +1,7 @@
 PHP Airbrake Bundle for Symfony2
 ================================
 
-This helps binds the [php-airbrake module](https://github.com/nodrew/php-airbrake) into a Symfony2 bundle for easy use with the framework. It will autoload an exception handler into the framework, so that all uncaught errors are sent to the [Airbrake Service](http://airbrake.io).
+This helps binds the [php-airbrake module](https://github.com/MusicGlue/php-airbrake) into a Symfony2 bundle for easy use with the framework. It will autoload an exception handler into the framework, so that all uncaught errors are sent to the [Airbrake Service](http://airbrake.io).
 
 Installation Instructions
 =========================
@@ -15,12 +15,12 @@ Add these blocks to the following files
 
 ```
 [PhpAirbrakeBundle]
-    git=http://github.com/nodrew/PhpAirbrakeBundle.git
-    target=/bundles/Nodrew/Bundle/PhpAirbrakeBundle
+    git=http://github.com/MusicGlue/PhpAirbrakeBundle.git
+    target=/bundles/MusicGlue/Bundle/PhpAirbrakeBundle
 
 [php-airbrake]
-    git=http://github.com/nodrew/php-airbrake.git
-    target=/bundles/Nodrew/Bundle/PhpAirbrakeBundle/vendor/php-airbrake
+    git=http://github.com/MusicGlue/php-airbrake.git
+    target=/bundles/MusicGlue/Bundle/PhpAirbrakeBundle/vendor/php-airbrake
 ```
 
 *app/autoload.php*
@@ -29,7 +29,7 @@ Add these blocks to the following files
 $loader = new UniversalClassLoader();
 $loader->registerNamespaces(array(
     ...
-    'Nodrew'   => __DIR__.'/../vendor/bundles',
+    'MusicGlue'   => __DIR__.'/../vendor/bundles',
     ...
 ));
 ```
@@ -42,7 +42,7 @@ The best way to install the library is by using [Composer](http://getcomposer.or
 ``` javascript
 { 
   "require": {
-    "nodrew/php-airbrake-bundle": "dev-master"
+    "MusicGlue/php-airbrake-bundle": "dev-master"
   }
 }
 ```
@@ -58,7 +58,7 @@ public function registerBundles()
     $bundles = array(
         // System Bundles
         ...
-        new Nodrew\Bundle\PhpAirbrakeBundle\PhpAirbrakeBundle(),
+        new MusicGlue\Bundle\PhpAirbrakeBundle\PhpAirbrakeBundle(),
         ...
     );
 }
@@ -85,7 +85,7 @@ php_airbrake:
 Calling Airbrake Manually
 =========================
 
-The [Airbrake Client](https://github.com/nodrew/php-airbrake) can be found inside the Service Container and can be used like this:
+The [Airbrake Client](https://github.com/MusicGlue/php-airbrake) can be found inside the Service Container and can be used like this:
 
 ```php
 <?php
@@ -112,7 +112,7 @@ This bundle is under the MIT license. See the complete license in the bundle:
 About
 -----
 
-See also the list of [contributors](https://github.com/Nodrew/PhpAirbrakeBundle/contributors).
+See also the list of [contributors](https://github.com/MusicGlue/PhpAirbrakeBundle/contributors).
 
 Reporting an issue or a feature request
 ---------------------------------------

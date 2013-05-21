@@ -1,5 +1,5 @@
 <?php
-namespace Nodrew\Bundle\PhpAirbrakeBundle\Airbrake;
+namespace MusicGlue\Bundle\PhpAirbrakeBundle\Airbrake;
 
 use Airbrake\Client as AirbrakeClient;
 use Airbrake\Notice;

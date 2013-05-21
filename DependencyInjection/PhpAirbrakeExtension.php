@@ -1,6 +1,6 @@
 <?php
 
-namespace Nodrew\Bundle\PhpAirbrakeBundle\DependencyInjection;
+namespace MusicGlue\Bundle\PhpAirbrakeBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;

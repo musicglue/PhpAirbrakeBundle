@@ -7,12 +7,12 @@
     "authors": [
         {
             "name": "Drew Butler",
-            "email": "hi@nodrew.com"
+            "email": "hi@MusicGlue.com"
         }
     ],
     "require": {
         "php": ">=5.3.1",        
-        "nodrew/php-airbrake": "dev-master"
+        "MusicGlue/php-airbrake": "dev-master"
     },
     "autoload": {
         "psr-0": { "MusicGlue\\Bundle\\PhpAirbrakeBundle": "" }
