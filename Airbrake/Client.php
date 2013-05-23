@@ -45,12 +45,19 @@ class Client extends AirbrakeClient
             }
         }
 
+        $postData = array();
+        foreach ($request->request->all() as $key => $value) {
+            if (!in_array($key, $container->getParameter('php_airbrake.blacklist'))) {
+                $postData[$key] = $value;
+            }
+        }
+
         $options = array(
             'environmentName' => $envName,
             'queue'           => $queue,
             'serverData'      => $request->server->all(),
             'getData'         => $request->query->all(),
-            'postData'        => $request->request->all(),
+            'postData'        => $postData,
             'sessionData'     => $request->getSession() ? $request->getSession()->all() : null,
             'component'       => $controller,
             'action'          => $action,
