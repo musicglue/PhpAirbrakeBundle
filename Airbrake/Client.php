@@ -52,10 +52,16 @@ class Client extends AirbrakeClient
             }
         }
 
+        $envBlacklist = $container->getParameter('php_airbrake.blacklist');
+        $server = $request->server->all();
+        $serverData = $envBlacklist ?
+            array_intersect_key($server, array_flip($envBlacklist))
+            : $server;
+
         $options = array(
             'environmentName' => $envName,
             'queue'           => $queue,
-            'serverData'      => $request->server->all(),
+            'serverData'      => $serverData,
             'getData'         => $request->query->all(),
             'postData'        => $postData,
             'sessionData'     => $request->getSession() ? $request->getSession()->all() : null,

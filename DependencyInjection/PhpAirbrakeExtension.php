@@ -28,6 +28,7 @@ class PhpAirbrakeExtension extends Extension
         $container->setParameter('php_airbrake.api_endpoint', isset($config['api_endpoint']) ? $config['api_endpoint'] : null);
         $container->setParameter('php_airbrake.queue', isset($config['queue']) ? $config['queue'] : null);
         $container->setParameter('php_airbrake.blacklist', isset($config['blacklist']) ? $config['blacklist'] : array());
+        $container->setParameter('php_airbrake.env_whitelist', isset($config['env_whitelist']) ? $config['env_whitelist'] : null);
     }
 
     /**
