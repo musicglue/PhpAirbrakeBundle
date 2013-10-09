@@ -52,10 +52,12 @@ class Client extends AirbrakeClient
             }
         }
 
-        $envBlacklist = $container->getParameter('php_airbrake.blacklist');
+        $envWhitelist = array_merge(array(
+            'SCRIPT_NAME'
+        ), $container->getParameter('php_airbrake.env_whitelist'));
         $server = $request->server->all();
-        $serverData = $envBlacklist ?
-            array_intersect_key($server, array_flip($envBlacklist))
+        $serverData = $envWhitelist ?
+            array_intersect_key($server, array_flip($envWhitelist))
             : $server;
 
         $options = array(
