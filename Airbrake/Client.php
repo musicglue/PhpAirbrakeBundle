@@ -37,6 +37,14 @@ class Client extends AirbrakeClient
         $request       = $container->get('request');
         $controller    = 'None';
         $action        = 'None';
+        
+        $sitename = $request->server->get('REACT_ENV');
+        $environment = $request->server->get('SYMFONY_ENV');
+
+        if ($sitename && $environment) {
+            $envName = $sitename.'_'.$environment;
+        }
+
 
         if ($sa = $request->attributes->get('_controller')) {
             $controllerArray = explode('::', $sa);
