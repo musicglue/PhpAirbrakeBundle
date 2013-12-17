@@ -40,11 +40,16 @@ class Client extends AirbrakeClient
         
         $sitename = $request->server->get('REACT_ENV');
         $env = $request->server->get('SYMFONY_ENV');
+        $isCheckout = $request->server->get('MUSIC_GLUE_CHECKOUT');
         $sha1 = $request->server->get('MUSICGLUE_COMMIT_SHA1');
         $sha1 = substr($sha1, 0, 6);
 
         if ($sitename && $env && $sha1) {
             $envName = $env.'-'.$sha1;
+            
+            if ($isCheckout) {
+                $envName .= '-checkout';
+            }
         }
 
         if ($sa = $request->attributes->get('_controller')) {
