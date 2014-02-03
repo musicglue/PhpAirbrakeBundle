@@ -38,10 +38,10 @@ class Client extends AirbrakeClient
         $controller    = 'None';
         $action        = 'None';
         
-        $sitename = $request->server->get('REACT_ENV', $envName);
-        $env = $request->server->get('SYMFONY_ENV');
-        $isCheckout = $request->server->get('MUSIC_GLUE_CHECKOUT');
-        $sha1 = $request->server->get('MUSICGLUE_COMMIT_SHA1');
+        $sitename = getenv('REACT_ENV');
+        $env = getenv('SYMFONY_ENV');
+        $isCheckout = getenv('MUSIC_GLUE_CHECKOUT');
+        $sha1 = getenv('MUSICGLUE_COMMIT_SHA1');
         $sha1 = substr($sha1, 0, 6);
 
         if ($env && $sha1) {
@@ -74,9 +74,7 @@ class Client extends AirbrakeClient
             array_intersect_key($server, array_flip($envWhitelist))
             : $server;
 
-        if ($sitename) {
-            $serverData['SITE_NAME'] = $sitename;
-        }
+        $serverData['SITE_NAME'] = $sitename ?: $envName;
 
         $options = array(
             'environmentName' => $envName,
