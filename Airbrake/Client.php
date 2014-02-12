@@ -7,16 +7,6 @@ use Airbrake\Configuration as AirbrakeConfiguration;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
-/**
- * The PhpAirbrakeBundle Client Loader.
- *
- * This class assists in the loading of the php-airbrake Client class.
- *
- * @package		Airbrake
- * @author		Drew Butler <hi@MusicGlue.com>
- * @copyright	(c) 2011 Drew Butler
- * @license		http://www.opensource.org/licenses/mit-license.php
- */
 class Client extends AirbrakeClient
 {
     protected $enabled = false;
@@ -33,12 +23,6 @@ class Client extends AirbrakeClient
             return;
         }
 
-        $this->enabled = true;
-        $request       = $container->get('request');
-        $controller    = 'None';
-        $action        = 'None';
-        
-        $sitename = getenv('REACT_ENV');
         $env = getenv('SYMFONY_ENV');
         $isCheckout = getenv('MUSIC_GLUE_CHECKOUT');
         $sha1 = getenv('MUSICGLUE_COMMIT_SHA1');
@@ -52,41 +36,32 @@ class Client extends AirbrakeClient
             }
         }
 
-        if ($sa = $request->attributes->get('_controller')) {
-            $controllerArray = explode('::', $sa);
-            if(sizeof($controllerArray) > 1){
-                list($controller, $action) = $controllerArray;
+        $this->enabled = true;
+        $options = $this->getOptions($envName, $queue, $container);
+
+        // Filter POST
+        if (isset($options['postData'])) {
+            $postData = array();
+            foreach ($options['postData'] as $key => $value) {
+                if (!in_array($key, $container->getParameter('php_airbrake.blacklist'))) {
+                    $postData[$key] = $value;
+                }
             }
+
+            $options['postData'] = $postData;
         }
 
-        $postData = array();
-        foreach ($request->request->all() as $key => $value) {
-            if (!in_array($key, $container->getParameter('php_airbrake.blacklist'))) {
-                $postData[$key] = $value;
-            }
+        // Filter SERVER
+        if (isset($options['serverData'])) {
+            $envWhitelist = array_merge(
+                ['SCRIPT_NAME', 'X_SITE_NAME'],
+                $container->getParameter('php_airbrake.env_whitelist')
+            );
+            $options['serverData'] = array_intersect_key(
+                $options['serverData'],
+                array_flip($envWhitelist)
+            );
         }
-
-        $envWhitelist = array_merge(array(
-            'SCRIPT_NAME'
-        ), $container->getParameter('php_airbrake.env_whitelist'));
-        $server = $request->server->all();
-        $serverData = $envWhitelist ?
-            array_intersect_key($server, array_flip($envWhitelist))
-            : $server;
-
-        $serverData['SITE_NAME'] = $sitename ?: $envName;
-
-        $options = array(
-            'environmentName' => $envName,
-            'queue'           => $queue,
-            'serverData'      => $serverData,
-            'getData'         => $request->query->all(),
-            'postData'        => $postData,
-            'sessionData'     => $request->getSession() ? $request->getSession()->all() : null,
-            'component'       => $controller,
-            'action'          => $action,
-            'projectRoot'     => realpath($container->getParameter('kernel.root_dir').'/..'),
-        );
 
         if(!empty($apiEndPoint)){
             $options['apiEndPoint'] = $apiEndPoint;
@@ -96,18 +71,38 @@ class Client extends AirbrakeClient
 
     }
 
-    /**
-     * Notify about the notice.
-     *
-     * If there is a PHP Resque client given in the configuration, then use that to queue up a job to
-     * send this out later. This should help speed up operations.
-     *
-     * @param Airbrake\Notice $notice
-     */
     public function notify(Notice $notice)
     {
         if ($this->enabled) {
             parent::notify($notice);
         }
+    }
+
+    protected function getOptions($envName, $queue, $container)
+    {
+        $request = $container->get('request');
+
+        $controller = 'None';
+        $action = 'None';
+        if ($sa = $request->attributes->get('_controller')) {
+            $controllerArray = explode('::', $sa);
+            if (sizeof($controllerArray) > 1) {
+                list($controller, $action) = $controllerArray;
+            }
+        }
+
+        $request->server->set('X_SITE_NAME', getenv('REACT_ENV') ?: $envName);
+
+        return [
+            'environmentName' => $envName,
+            'queue'           => $queue,
+            'serverData'      => $request->server->all(),
+            'getData'         => $request->query->all(),
+            'postData'        => $request->request->all(),
+            'sessionData'     => $request->getSession() ? $request->getSession()->all() : null,
+            'component'       => $controller,
+            'action'          => $action,
+            'projectRoot'     => realpath($container->getParameter('kernel.root_dir').'/..'),
+        ];
     }
 }
