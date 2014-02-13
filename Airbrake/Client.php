@@ -75,12 +75,16 @@ class Client extends AirbrakeClient
 
     public function getEnv()
     {
-        return $this->configuration->get('environmentName');
+        if ($this->configuration) {
+            return $this->configuration->get('environmentName');
+        }
     }
 
     public function setEnv($envName)
     {
-        $this->configuration->set('environmentName', $envName);
+        if ($this->configuration) {
+            $this->configuration->set('environmentName', $envName);
+        }
     }
 
     protected function getOptions($envName, $queue, $container)
