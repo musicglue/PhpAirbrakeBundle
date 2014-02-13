@@ -24,16 +24,11 @@ class Client extends AirbrakeClient
         }
 
         $env = getenv('SYMFONY_ENV');
-        $isCheckout = getenv('MUSIC_GLUE_CHECKOUT');
         $sha1 = getenv('MUSICGLUE_COMMIT_SHA1');
         $sha1 = substr($sha1, 0, 6);
 
         if ($env && $sha1) {
             $envName = $env.'-'.$sha1;
-            
-            if ($isCheckout) {
-                $envName .= '-checkout';
-            }
         }
 
         $this->enabled = true;
@@ -76,6 +71,16 @@ class Client extends AirbrakeClient
         if ($this->enabled) {
             parent::notify($notice);
         }
+    }
+
+    public function getEnv()
+    {
+        return $this->configuration->get('environmentName');
+    }
+
+    public function setEnv($envName)
+    {
+        $this->configuration->set('environmentName', $envName);
     }
 
     protected function getOptions($envName, $queue, $container)

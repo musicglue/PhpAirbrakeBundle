@@ -16,6 +16,6 @@ class ConsoleClient extends Client
 
     public function setCommand($name)
     {
-        $this->configuration->_action = $name;
+        $this->configuration->set('action', $name);
     }
 }
