@@ -8,16 +8,10 @@ class ConsoleClient extends Client
         return [
             'environmentName' => $envName,
             'queue'           => $queue,
+            'serverData'      => $_SERVER,
             'component'       => 'console',
-            'action'          => 'none',
+            'action'          => $_SERVER['argv'][0],
             'projectRoot'     => realpath($container->getParameter('kernel.root_dir').'/..')
         ];
-    }
-
-    public function setCommand($name)
-    {
-        if ($this->configuration) {
-            $this->configuration->set('action', $name);
-        }
     }
 }

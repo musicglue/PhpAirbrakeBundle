@@ -53,8 +53,8 @@ class Client extends AirbrakeClient
                 $container->getParameter('php_airbrake.env_whitelist')
             );
             $options['serverData'] = array_intersect_key(
-                $options['serverData'],
-                array_flip($envWhitelist)
+                array_change_key_case($options['serverData'], CASE_UPPER),
+                array_change_key_case(array_flip($envWhitelist), CASE_UPPER)
             );
         }
 
