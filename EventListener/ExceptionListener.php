@@ -3,7 +3,8 @@ namespace MusicGlue\Bundle\PhpAirbrakeBundle\EventListener;
 
 use MusicGlue\Bundle\PhpAirbrakeBundle\Airbrake\Client,
     Symfony\Component\HttpKernel\Event\GetResponseForExceptionEvent,
-    Symfony\Component\HttpKernel\Exception\HttpException;
+    Symfony\Component\HttpKernel\Exception\HttpException,
+    MusicGlue\Bundle\Command\ExpectedException;
 
 /**
  * The PhpAirbrakeBundle ExceptionListener.
