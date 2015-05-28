@@ -27,11 +27,15 @@ class ExceptionListener
     public function onKernelException(GetResponseForExceptionEvent $event)
     {
         $exception = $event->getException();
-        
+
         if ($exception instanceof HttpException) {
             return;
         }
-        
+
+        if ($exception instanceof ExpectedException) {
+            return;
+        }
+
         $this->client->notifyOnException($exception);
         error_log($exception->getMessage().' in: '.$exception->getFile().':'.$exception->getLine());
     }
