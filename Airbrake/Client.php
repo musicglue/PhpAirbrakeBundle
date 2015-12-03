@@ -48,7 +48,7 @@ class Client extends AirbrakeClient
         }
 
         // Filter SERVER
-        if (isset($options['serverData'])) {
+        if (isset($options['serverData']) && $container->getParameter('php_airbrake.env_whitelist')) {
             $envWhitelist = array_merge(
                 ['SCRIPT_NAME', 'X_SITE_NAME'],
                 $container->getParameter('php_airbrake.env_whitelist')
