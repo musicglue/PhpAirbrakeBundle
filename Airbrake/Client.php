@@ -16,8 +16,9 @@ class Client extends AirbrakeClient
      * @param Symfony\Component\DependencyInjection\ContainerInterface $container
      * @param string|null $queue
      * @param string|null $apiEndPoint
+     * @param bool|null $enabled
      */
-    public function __construct($apiKey, $envName, ContainerInterface $container, $queue=null, $apiEndPoint=null)
+    public function __construct($apiKey, $envName, ContainerInterface $container, $queue=null, $apiEndPoint=null, $enabled=true)
     {
         if (!$apiKey) {
             return;
@@ -31,7 +32,7 @@ class Client extends AirbrakeClient
             $envName = $env.'-'.$sha1;
         }
 
-        $this->enabled = true;
+        $this->enabled = $enabled;
         $options = $this->getOptions($envName, $queue, $container);
 
         // Filter POST
@@ -47,7 +48,7 @@ class Client extends AirbrakeClient
         }
 
         // Filter SERVER
-        if (isset($options['serverData'])) {
+        if (isset($options['serverData']) && $container->getParameter('php_airbrake.env_whitelist')) {
             $envWhitelist = array_merge(
                 ['SCRIPT_NAME', 'X_SITE_NAME'],
                 $container->getParameter('php_airbrake.env_whitelist')

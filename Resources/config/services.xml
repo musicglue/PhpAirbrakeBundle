@@ -8,6 +8,7 @@
         <parameter key="php_airbrake.api_key"></parameter>
         <parameter key="php_airbrake.api_endpoint"></parameter>
         <parameter key="php_airbrake.queue"></parameter>
+        <parameter key="php_airbrake.enabled"></parameter>
         <parameter key="php_airbrake.client.class">MusicGlue\Bundle\PhpAirbrakeBundle\Airbrake\Client</parameter>
         <parameter key="php_airbrake.console_client.class">MusicGlue\Bundle\PhpAirbrakeBundle\Airbrake\ConsoleClient</parameter>
         <parameter key="php_airbrake.exception_listener.class">MusicGlue\Bundle\PhpAirbrakeBundle\EventListener\ExceptionListener</parameter>
@@ -21,6 +22,7 @@
             <argument type="service" id="service_container" />
             <argument>%php_airbrake.queue%</argument>
             <argument>%php_airbrake.api_endpoint%</argument>
+            <argument>%php_airbrake.enabled%</argument>
         </service>
 
         <service id="php_airbrake.console_client" class="%php_airbrake.console_client.class%">
@@ -29,6 +31,7 @@
             <argument type="service" id="service_container" />
             <argument>%php_airbrake.queue%</argument>
             <argument>%php_airbrake.api_endpoint%</argument>
+            <argument>%php_airbrake.enabled%</argument>
         </service>
 
         <service id="php_airbrake.exception_listener" class="%php_airbrake.exception_listener.class%">
